@@ -20,7 +20,14 @@
 			<input type="text" id="isbn" th:field="*{isbn}" />
 			<label for="Price">Price</label>
 			<input type="text" id="Price" th:field="*{Price}" />
+			
+			<label for="catlist">Category</label>
+			 	<select style="width: 100px" id="catlist" th:field="*{category}" class="form-control">
+       			<option th:each="category: ${categories}" th:value="${category.categoryid}" th:text="${category.name}"></option>
+    		</select>
+    		
 			<input type="submit" value="Save" class="btn btn-success"></input>
+						
 		</form>
 	</div>
 

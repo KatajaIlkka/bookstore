@@ -9,39 +9,45 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import bookstore.bookstore.domain.Book;
 import bookstore.bookstore.domain.BookRepository;
+import bookstore.bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
 	@Autowired
-	private BookRepository repository;
+	private BookRepository brepository;
+	
+	@Autowired
+	private CategoryRepository crepository;
 	
 	@RequestMapping(value="/booklist", method=RequestMethod.GET)
 	public String bookList(Model model){
-		model.addAttribute("books", repository.findAll());
+		model.addAttribute("books", brepository.findAll());
 		return "booklist";
 	}
 
 	@RequestMapping(value="/add")
 	public String addBook(Model model){
 		model.addAttribute("book", new Book());
+		model.addAttribute("categories", crepository.findAll());
 		return "addbook";
 	}
 	
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public String save(Book book){
-		repository.save(book);
+		brepository.save(book);
 		return "redirect:/booklist";
 	}
 	
 	@RequestMapping(value="/edit/{id}")
 	public String editBook(@PathVariable("id") Long bookId, Model model){
-		model.addAttribute("book", repository.findOne(bookId));
+		model.addAttribute("book", brepository.findOne(bookId));
+		model.addAttribute("categories", crepository.findAll());
 		return "editbook";
 	}
 	
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
 	public String deleteBook(@PathVariable("id") Long bookId, Model model){
-	repository.delete(bookId);
+	brepository.delete(bookId);
 	return "redirect:../booklist";
 	}
 }
