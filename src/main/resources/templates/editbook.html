@@ -3,7 +3,6 @@
 <head>
 <title>Bookstore</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
 </head>
 <body>
 	<h1>Edit book</h1>
@@ -21,6 +20,12 @@
 			<input type="text" id="isbn" th:field="*{isbn}" />
 			<label for="Price">Price</label>
 			<input type="text" id="Price" th:field="*{Price}" />
+			<label for="catlist">Category</label>
+			<select id="catlist" th:field="*{category}" class="form-control">
+			<option th:each="category: ${categories}"
+			th:value="${category.categoryid}"
+			th:text="${category.name}"></option>
+			</select>
 			
 			<input type="hidden" id="categoryid" th:field="${book.category.categoryid}" />
 			
